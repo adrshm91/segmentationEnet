@@ -24,7 +24,7 @@ model = ENet_model(model_id, img_height=img_height, img_width=img_width, batch_s
 no_of_classes = model.no_of_classes
 
 # load the mean color channels of the train imgs:
-train_mean_channels = cPickle.load(open("./data/mean_channels.pkl", "rb"))
+train_mean_channels = cPickle.load(open(project_dir + "/data/mean_channels.pkl", "rb"))
 
 # load the sequence data:
 #seq_frames_dir = "C:\\Users\\z003zxuz\\Documents\\Research_Project\\code\\segmentation\\test\\"

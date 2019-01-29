@@ -2,11 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e168d82f-73cc-4723-984f-aadcec41e713" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/results/IMG-20170520-WA0016.jpg_pred.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results/munster_000151_000019_pred.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/results/tubingen_000140_000019_pred.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/run_on_sequence_modified.py" beforeDir="false" afterPath="$PROJECT_DIR$/run_on_sequence_modified.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -50,8 +45,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/run_on_sequence_modified.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="193">
-              <caret line="30" column="38" selection-start-line="30" selection-start-column="38" selection-end-line="30" selection-end-column="38" />
+            <state relative-caret-position="227">
+              <caret line="26" column="54" selection-start-line="26" selection-start-column="54" selection-end-line="26" selection-end-column="54" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -317,12 +312,12 @@
       <workItem from="1548589312376" duration="32000" />
       <workItem from="1548690612895" duration="1238000" />
       <workItem from="1548751986316" duration="3227000" />
-      <workItem from="1548767627511" duration="530000" />
+      <workItem from="1548767627511" duration="698000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="36283000" />
+    <option name="totallyTimeSpent" value="36451000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1176" extended-state="6" />
@@ -496,8 +491,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/run_on_sequence_modified.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="193">
-          <caret line="30" column="38" selection-start-line="30" selection-start-column="38" selection-end-line="30" selection-end-column="38" />
+        <state relative-caret-position="227">
+          <caret line="26" column="54" selection-start-line="26" selection-start-column="54" selection-end-line="26" selection-end-column="54" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
