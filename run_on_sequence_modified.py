@@ -9,9 +9,9 @@ from utilities import label_img_to_color
 from model import ENet_model
 
 #project_dir = "C:\\Users\\z003zxuz\\Documents\\Research_Project\\code\\segmentation"
-project_dir = "/home/khazi/adarshProject/segmentationEnet"
+project_dir = os.path.dirname(os.path.realpath(__file__))
 
-data_dir = project_dir + "data/"
+data_dir = project_dir + "/data/"
 
 model_id = "sequence_run"
 
@@ -24,11 +24,12 @@ model = ENet_model(model_id, img_height=img_height, img_width=img_width, batch_s
 no_of_classes = model.no_of_classes
 
 # load the mean color channels of the train imgs:
-train_mean_channels = cPickle.load(open("data/mean_channels.pkl", "rb"))
+train_mean_channels = cPickle.load(open("./data/mean_channels.pkl", "rb"))
 
 # load the sequence data:
 #seq_frames_dir = "C:\\Users\\z003zxuz\\Documents\\Research_Project\\code\\segmentation\\test\\"
-seq_frames_dir = "/home/khazi/adarshProject/segmentationEnet/test/"
+seq_frames_dir = project_dir + '/test/'
+print(seq_frames_dir)
 
 seq_frame_paths = []
 frame_names = sorted(os.listdir(seq_frames_dir))
@@ -39,6 +40,7 @@ for step, frame_name in enumerate(frame_names):
     frame_path = seq_frames_dir + frame_name
     seq_frame_paths.append(frame_path)
 
+print(seq_frame_paths)
 # compute the number of batches needed to iterate through the data:
 no_of_frames = len(seq_frame_paths)
 no_of_batches = int(no_of_frames/batch_size)

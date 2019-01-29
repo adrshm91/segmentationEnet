@@ -10,7 +10,7 @@ class ENet_model(object):
         self.model_id = model_id
 
         #self.project_dir = "C:\\Users\\z003zxuz\\Documents\\Research_Project\\code\\segmentation"
-        self.project_dir = "/home/khazi/adarshProject/segmentationEnet"
+        self.project_dir = os.path.dirname(os.path.realpath(__file__))
 
         #self.logs_dir = self.project_dir + "\\training_logs\\"
         self.logs_dir = self.project_dir + "/training_logs/"
