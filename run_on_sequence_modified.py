@@ -80,8 +80,11 @@ with tf.Session() as sess:
         batch_feed_dict = model.create_feed_dict(imgs_batch=batch_imgs,
                     early_drop_prob=0.0, late_drop_prob=0.0)
 
+        print(batch_feed_dict)
+
         # run a forward pass and get the logits:
         print(model.logits)
+
         logits = sess.run(model.logits, feed_dict=batch_feed_dict)
 
         print("step: %d/%d" % (step+1, no_of_batches))
