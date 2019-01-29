@@ -8,7 +8,8 @@ from utilities import label_img_to_color
 
 from model import ENet_model
 
-project_dir = "C:\\Users\\z003zxuz\\Documents\\Research_Project\\code\\segmentation"
+#project_dir = "C:\\Users\\z003zxuz\\Documents\\Research_Project\\code\\segmentation"
+project_dir = "/home/khazi/adarshProject/segmentationEnet"
 
 data_dir = project_dir + "data/"
 
@@ -26,7 +27,9 @@ no_of_classes = model.no_of_classes
 train_mean_channels = cPickle.load(open("data/mean_channels.pkl", "rb"))
 
 # load the sequence data:
-seq_frames_dir = "C:\\Users\\z003zxuz\\Documents\\Research_Project\\code\\segmentation\\test\\"
+#seq_frames_dir = "C:\\Users\\z003zxuz\\Documents\\Research_Project\\code\\segmentation\\test\\"
+seq_frames_dir = "/home/khazi/adarshProject/segmentationEnet/test/"
+
 seq_frame_paths = []
 frame_names = sorted(os.listdir(seq_frames_dir))
 for step, frame_name in enumerate(frame_names):
@@ -41,7 +44,7 @@ no_of_frames = len(seq_frame_paths)
 no_of_batches = int(no_of_frames/batch_size)
 
 # define where to place the resulting images:
-results_dir = model.project_dir + "\\results\\"
+results_dir = model.project_dir + "/results/"
 
 # create a saver for restoring variables/parameters:
 saver = tf.train.Saver(tf.trainable_variables(), write_version=tf.train.SaverDef.V2)
@@ -52,7 +55,8 @@ with tf.Session() as sess:
     sess.run(init)
 
     # restore the best trained model:
-    saver.restore(sess, project_dir + "\\training_logs\\best_model\\model_1_epoch_23.ckpt")
+    #saver.restore(sess, project_dir + "\\training_logs\\best_model\\model_1_epoch_23.ckpt")
+    saver.restore(sess, project_dir + "/training_logs/best_model/model_1_epoch_23.ckpt")
 
     batch_pointer = 0
     for step in range(no_of_batches):
@@ -88,10 +92,11 @@ with tf.Session() as sess:
 
             img = batch_imgs[i] + train_mean_channels
 
-            img_file_name = img_paths[i].split("\\")[-1]
+            img_file_name = img_paths[i].split("/")[-1]
             img_name = img_file_name.split(".png")[0]
             pred_path = results_dir + img_name + "_pred.png"
 
             overlayed_img = 0.3*img + 0.7*pred_img_color
 
             cv2.imwrite(pred_path, overlayed_img)
+
