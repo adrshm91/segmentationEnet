@@ -48,7 +48,8 @@ def max_unpool(inputs, pooling_indices, output_shape=None, k_size=[1, 2, 2, 1]):
     batch_shape = tf.concat([[input_shape[0]], [1], [1], [1]], 0)
     batch_range = tf.reshape(tf.range(input_shape[0], dtype=tf.int32), shape=batch_shape)
     b = one_like_pooling_indices*batch_range
-    y = pooling_indices//(output_shape[2]*output_shape[3])
+    #y = pooling_indices//(output_shape[2]*output_shape[3])
+    y = pooling_indices // (output_shape[2] * output_shape[3]) % output_shape[1]
     x = (pooling_indices//output_shape[3]) % output_shape[2]
     feature_range = tf.range(output_shape[3], dtype=tf.int32)
     f = one_like_pooling_indices*feature_range
