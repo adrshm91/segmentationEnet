@@ -174,7 +174,7 @@ for step, img_path in enumerate(train_img_paths):
 mean_channels = mean_channels/float(no_of_train_imgs)
 
 # # save to disk:
-cPickle.dump(mean_channels, open(project_dir + "data/mean_channels.pkl", "wb"))
+cPickle.dump(mean_channels, open(project_dir + "/data/mean_channels.pkl", "wb"))
 
 
 # compute the class weights:
@@ -209,7 +209,7 @@ for trainId, count in trainId_to_count.items():
     class_weights.append(trainId_weight)
 
 # # save to disk:
-cPickle.dump(class_weights, open(project_dir + "data/class_weights.pkl", "wb"))
+cPickle.dump(class_weights, open(project_dir + "/data/class_weights.pkl", "wb"))
 
 
 # get the path to all validation images and their corresponding label image:
@@ -235,7 +235,7 @@ for dir_step, dir in enumerate(val_dirs):
         # project_dir/data:
         img_small = cv2.resize(img, (new_img_width, new_img_height),
                     interpolation=cv2.INTER_NEAREST)
-        img_small_path = project_dir + "data/" + img_id + ".png"
+        img_small_path = project_dir + "/data/" + img_id + ".png"
         cv2.imwrite(img_small_path, img_small)
         val_img_paths.append(img_small_path)
 
@@ -252,15 +252,15 @@ for dir_step, dir in enumerate(val_dirs):
         trainId_label = id_to_trainId_map_func(id_label)
 
         # save the label image to project_dir/data:
-        trainId_label_path = project_dir + "data/" + img_id + "_trainId_label.png"
+        trainId_label_path = project_dir + "/data/" + img_id + "_trainId_label.png"
         cv2.imwrite(trainId_label_path, trainId_label)
         val_trainId_label_paths.append(trainId_label_path)
 
 # # save the validation data to disk:
 cPickle.dump(val_trainId_label_paths,
-            open(project_dir + "data/val_trainId_label_paths.pkl", "wb"))
+            open(project_dir + "/data/val_trainId_label_paths.pkl", "wb"))
 cPickle.dump(val_img_paths,
-            open(project_dir + "data/val_img_paths.pkl", "wb"))
+            open(project_dir + "/data/val_img_paths.pkl", "wb"))
 # val_trainId_label_paths = cPickle.load(open(project_dir + "data/val_trainId_label_paths.pkl"))
 # val_img_paths = cPickle.load(open(project_dir + "data/val_img_paths.pkl"))
 
@@ -297,7 +297,7 @@ for step, (img_path, label_path) in enumerate(zip(train_img_paths, train_trainId
     augmented_train_trainId_label_paths.append(label_img_flipped_path)
 
 # # randomly shuffle the augmented train data:
-augmented_train_data = zip(augmented_train_img_paths, augmented_train_trainId_label_paths)
+augmented_train_data = list(zip(augmented_train_img_paths, augmented_train_trainId_label_paths))
 random.shuffle(augmented_train_data)
 random.shuffle(augmented_train_data)
 random.shuffle(augmented_train_data)
@@ -307,9 +307,9 @@ random.shuffle(augmented_train_data)
 train_data = augmented_train_data
 train_img_paths, train_trainId_label_paths = zip(*train_data)
 cPickle.dump(train_img_paths,
-            open(project_dir + "data/train_img_paths.pkl", "wb"))
+            open(project_dir + "/data/train_img_paths.pkl", "wb"))
 cPickle.dump(train_trainId_label_paths,
-            open(project_dir + "data/train_trainId_label_paths.pkl", "wb"))
+            open(project_dir + "/data/train_trainId_label_paths.pkl", "wb"))
 # train_img_paths = cPickle.load(open(project_dir + "data/train_img_paths.pkl"))
 # train_trainId_label_paths = cPickle.load(open(project_dir + "data/train_trainId_label_paths.pkl"))
 
