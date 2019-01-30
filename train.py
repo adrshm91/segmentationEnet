@@ -13,8 +13,8 @@ from utilities import label_img_to_color
 from model import ENet_model
 
 #project_dir = os.path.dirname(os.path.realpath(__file__))
-project_dir = "/home/khazi/adarshProject/segmentationEnet"
-data_dir = project_dir + "/data/"
+project_dir = "/home/khazi/adarshProject/segmentationEnet/"
+data_dir = project_dir + "data/"
 # change this to not overwrite all log data when you train the model:
 model_id = "1"
 
@@ -28,7 +28,8 @@ model = ENet_model(model_id, img_height=img_height, img_width=img_width,
 no_of_classes = model.no_of_classes
 
 # load the mean color channels of the train imgs:
-train_mean_channels = cPickle.load(open(project_dir+"/data/mean_channels.pkl","rb"))
+#train_mean_channels = cPickle.load(open(project_dir+"data/mean_channels.pkl","rb"))
+train_mean_channels = cPickle.load(open(data_dir+"/mean_channels.pkl","rb"))
 print("train_mean_channels {}".format(type(train_mean_channels)))
 
 
