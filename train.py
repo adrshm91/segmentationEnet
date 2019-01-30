@@ -1,5 +1,5 @@
 import numpy as np
-import cPickle
+import _pickle as cPickle
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -11,10 +11,8 @@ from utilities import label_img_to_color
 
 from model import ENet_model
 
-project_dir = "/root/segmentation/"
-
-data_dir = project_dir + "data/"
-
+project_dir = os.path.dirname(os.path.realpath(__file__))
+data_dir = project_dir + "/data/"
 # change this to not overwrite all log data when you train the model:
 model_id = "1"
 
@@ -28,21 +26,24 @@ model = ENet_model(model_id, img_height=img_height, img_width=img_width,
 no_of_classes = model.no_of_classes
 
 # load the mean color channels of the train imgs:
-train_mean_channels = cPickle.load(open("data/mean_channels.pkl"))
+train_mean_channels = cPickle.load(open("data/mean_channels.pkl","rb"))
+print("train_mean_channels {}".format(type(train_mean_channels)))
+
 
 # load the training data from disk:
-train_img_paths = cPickle.load(open(data_dir + "train_img_paths.pkl"))
-train_trainId_label_paths = cPickle.load(open(data_dir + "train_trainId_label_paths.pkl"))
-train_data = zip(train_img_paths, train_trainId_label_paths)
+train_img_paths = cPickle.load(open(data_dir + "train_img_paths.pkl","rb"))
+train_trainId_label_paths = cPickle.load(open(data_dir + "train_trainId_label_paths.pkl","rb"))
+train_data = list(zip(train_img_paths, train_trainId_label_paths))
+print("train_img_paths is {}".format(train_img_paths))
 
 # compute the number of batches needed to iterate through the training data:
 no_of_train_imgs = len(train_img_paths)
 no_of_batches = int(no_of_train_imgs/batch_size)
 
 # load the validation data from disk:
-val_img_paths = cPickle.load(open(data_dir + "val_img_paths.pkl"))
-val_trainId_label_paths = cPickle.load(open(data_dir + "val_trainId_label_paths.pkl"))
-val_data = zip(val_img_paths, val_trainId_label_paths)
+val_img_paths = cPickle.load(open(data_dir + "val_img_paths.pkl","rb"))
+val_trainId_label_paths = cPickle.load(open(data_dir + "val_trainId_label_paths.pkl","rb"))
+val_data = list(zip(val_img_paths, val_trainId_label_paths))
 
 # compute the number of batches needed to iterate through the val data:
 no_of_val_imgs = len(val_img_paths)
@@ -107,6 +108,7 @@ def evaluate_on_val():
 def train_data_iterator():
     random.shuffle(train_data)
     train_img_paths, train_trainId_label_paths = zip(*train_data)
+    print("train_img_path {}".format(train_img_paths))
 
     batch_pointer = 0
     for step in range(no_of_batches):
@@ -118,6 +120,7 @@ def train_data_iterator():
         for i in range(batch_size):
             # read the next img:
             img = cv2.imread(train_img_paths[batch_pointer + i], -1)
+            print("img type is {}".format(img))
             img = img - train_mean_channels
             batch_imgs[i] = img
 
@@ -152,10 +155,10 @@ with tf.Session() as sess:
     sess.run(init)
 
     for epoch in range(no_of_epochs):
-        print "###########################"
-        print "######## NEW EPOCH ########"
-        print "###########################"
-        print "epoch: %d/%d" % (epoch+1, no_of_epochs)
+        print("###########################")
+        print("######## NEW EPOCH ########")
+        print("###########################")
+        print("epoch: %d/%d" % (epoch+1, no_of_epochs))
 
         # run an epoch and get all batch losses:
         batch_losses = []
@@ -172,7 +175,7 @@ with tf.Session() as sess:
                         feed_dict=batch_feed_dict)
             batch_losses.append(batch_loss)
 
-            print "step: %d/%d, training batch loss: %g" % (step+1, no_of_batches, batch_loss)
+            print("step: %d/%d, training batch loss: %g" % (step+1, no_of_batches, batch_loss))
 
         # compute the train epoch loss:
         train_epoch_loss = np.mean(batch_losses)
@@ -181,7 +184,7 @@ with tf.Session() as sess:
         # save the train epoch losses to disk:
         cPickle.dump(train_loss_per_epoch, open("%strain_loss_per_epoch.pkl"
                     % model.model_dir, "w"))
-        print "training loss: %g" % train_epoch_loss
+        print("training loss: %g" % train_epoch_loss)
 
         # run the model on the validation data:
         val_loss = evaluate_on_val()
@@ -191,14 +194,14 @@ with tf.Session() as sess:
         # save the val epoch losses to disk:
         cPickle.dump(val_loss_per_epoch, open("%sval_loss_per_epoch.pkl"\
                     % model.model_dir, "w"))
-        print "validation loss: %g" % val_loss
+        print("validation loss: %g" % val_loss)
 
         if val_loss < max(best_epoch_losses): # (if top 5 performance on val:)
             # save the model weights to disk:
             checkpoint_path = (model.checkpoints_dir + "model_" +
                         model.model_id + "_epoch_" + str(epoch + 1) + ".ckpt")
             saver.save(sess, checkpoint_path)
-            print "checkpoint saved in file: %s" % checkpoint_path
+            print("checkpoint saved in file: %s" % checkpoint_path)
 
             # update the top 5 val losses:
             index = best_epoch_losses.index(max(best_epoch_losses))

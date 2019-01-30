@@ -9,9 +9,11 @@ class ENet_model(object):
     def __init__(self, model_id, img_height=512, img_width=1024, batch_size=4):
         self.model_id = model_id
 
-        self.project_dir = "C:\\Users\\z003zxuz\\Documents\\Research_Project\\code\\segmentation"
+        #self.project_dir = "C:\\Users\\z003zxuz\\Documents\\Research_Project\\code\\segmentation"
+        self.project_dir = os.path.dirname(os.path.realpath(__file__))
 
-        self.logs_dir = self.project_dir + "\\training_logs\\"
+        #self.logs_dir = self.project_dir + "\\training_logs\\"
+        self.logs_dir = self.project_dir + "/training_logs/"
         if not os.path.exists(self.logs_dir):
             os.makedirs(self.logs_dir)
 
@@ -20,7 +22,8 @@ class ENet_model(object):
         self.img_width = img_width
 
         self.no_of_classes = 20
-        self.class_weights = pickle.load(open(self.project_dir + "\\data\\class_weights.pkl", 'rb'))
+        #self.class_weights = pickle.load(open(self.project_dir + "\\data\\class_weights.pkl", 'rb'))
+        self.class_weights = pickle.load(open(self.project_dir + "/data/class_weights.pkl", 'rb'))
 
         self.wd = 2e-4 # (weight decay)
         self.lr = 5e-4 # (learning rate)
@@ -41,9 +44,12 @@ class ENet_model(object):
         self.add_train_op()
 
     def create_model_dirs(self):
-        self.model_dir = self.logs_dir + "model_%s" % self.model_id + "\\"
-        self.checkpoints_dir = self.model_dir + "\\checkpoints\\"
-        self.debug_imgs_dir = self.model_dir + "\\imgs\\"
+       # self.model_dir = self.logs_dir + "model_%s" % self.model_id + "\\"
+        self.model_dir = self.logs_dir + "model_%s" % self.model_id + "/"
+       # self.checkpoints_dir = self.model_dir + "\\checkpoints\\"
+       # self.debug_imgs_dir = self.model_dir + "\\imgs\\"
+        self.checkpoints_dir = self.model_dir + "/checkpoints/"
+        self.debug_imgs_dir = self.model_dir + "/imgs/"
         if not os.path.exists(self.model_dir):
             os.makedirs(self.model_dir)
             os.makedirs(self.checkpoints_dir)
