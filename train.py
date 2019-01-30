@@ -28,7 +28,7 @@ model = ENet_model(model_id, img_height=img_height, img_width=img_width,
 no_of_classes = model.no_of_classes
 
 # load the mean color channels of the train imgs:
-train_mean_channels = cPickle.load(open("data/mean_channels.pkl","rb"))
+train_mean_channels = cPickle.load(open(project_dir+"/data/mean_channels.pkl","rb"))
 print("train_mean_channels {}".format(type(train_mean_channels)))
 
 
