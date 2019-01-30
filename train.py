@@ -12,7 +12,8 @@ from utilities import label_img_to_color
 
 from model import ENet_model
 
-project_dir = os.path.dirname(os.path.realpath(__file__))
+#project_dir = os.path.dirname(os.path.realpath(__file__))
+project_dir = "/home/khazi/adarshProject/segmentationEnet"
 data_dir = project_dir + "/data/"
 # change this to not overwrite all log data when you train the model:
 model_id = "1"
